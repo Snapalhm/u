@@ -3582,7 +3582,7 @@ end
 if Text == "UpSu" then
 bot.answerCallbackQuery(data.id, "• تم تحديث السورس", true)
 --os.execute('rm -rf start.lua')
---os.execute('curl -s https://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@raw.githubusercontent.com/melano11-7-7-1/MNOY/main/start.lua -o start.lua')
+--os.execute('curl -s https://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@raw.githubusercontent.com/Snapalhm/u/start.lua -o start.lua')
 dofile('start.lua')  
 end
 if Text == "UpBot" then
@@ -5450,7 +5450,7 @@ if text == ("تحديث السورس") then
 if programmer(msg) then  
 bot.sendText(msg.chat_id,msg.id,"*• تم تحديث السورس الى الاصدار الجديد*","md",true)
 --os.execute('rm -rf start.lua')
---os.execute('curl -s https://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@raw.githubusercontent.com/00000999kkkk/pp/main/start.lua -o start.lua')
+--os.execute('curl -s https://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@raw.githubusercontent.com/Snapalhm/u/start.lua -o start.lua')
 dofile('start.lua')  
 end
 end
@@ -15899,7 +15899,7 @@ local banhas = 'ᴜѕᴇ : '..banusername
 local rengk = 'ѕᴛᴀ : '..RinkBot
 local masha = 'ᴍѕɢ : '..TotalMsg
 local BIO = 'ʙɪᴏ : '..GetBio(msg.sender_id.user_id)
-local again = '[𝒃𝒂𝒓𝒃𝒊](t.me/B_L_Y)'
+local again = '[𝒃𝒂𝒓𝒃??](t.me/B_L_Y)'
 local reply_markup = bot.replyMarkup{type = 'inline',data = {
 {
 {text = uass, url = "https://t.me/"..ban.username..""}, 
