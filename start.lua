@@ -5329,7 +5329,7 @@ redis:set(bot_id.."boob"..msg.sender_id.user_id , gampoin)
 local Num = redis:get(bot_id..":"..msg.chat_id..":"..msg.sender_id.user_id..":game") or 0
 return bot.sendText(msg.chat_id,msg.id,"\n• كفو اجابتك صح \n• تم اضافة لك نقطة\n• نقاطك الان : "..Num.." \n✦","md",true)
 end
-end[]
+end
 
 if redis:get(bot_id.."Add:photo:Gamesss"..msg.sender_id.user_id..":"..msg.chat_id) == 'starttt' then
 if msg.content.photo then  
