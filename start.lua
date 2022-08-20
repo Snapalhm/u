@@ -379,7 +379,7 @@ return var
 end
 function ChannelJoin(msg)
 JoinChannel = true
-local url , res = https.request('https://api.telegram.org/bot5532110851:AAEtVfPE3dCNZPB3VUA1gdAR4L3cpS3RQSY/getchatmember?chat_id=@iinzzz&user_id='..msg.sender_id.user_id)
+local url , res = https.request('https://api.telegram.org/bot5532110851:AAGiTdSeZ8RqX5qGnQ4oyjIOrznw5CUgyZA/getchatmember?chat_id=@iinzzz&user_id='..msg.sender_id.user_id)
 local ChannelJoin = JSON.decode(url)
 if ChannelJoin and ChannelJoin.result and ChannelJoin.result.status == "left" then
 JoinChannel = false
