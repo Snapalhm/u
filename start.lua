@@ -4469,31 +4469,20 @@ if text == "/start" and not programmer(msg) then
 if redis:get(bot_id..":Notice") then
 if not redis:sismember(bot_id..":user_id",msg.sender_id.user_id) then
 scarduser_id = redis:scard(bot_id..":user_id") +1
-bot.sendText(sudoid,0,Reply_Status(msg.sender_id.user_id,"*⌁ :︙قام بدخول الى البوت عدد اعضاء البوت الان ( "..scarduser_id.." ) .*").i,"md",true)
+bot.sendText(sudoid,0,Reply_Status(msg.sender_id.user_id,"*- قام بدخول الى البوت عدد اعضاء البوت الان ( "..scarduser_id.." ) .*").i,"md",true)
 end
 end
 redis:sadd(bot_id..":user_id",msg.sender_id.user_id)  
-local UserInfo = bot.getUser(sudoid)
-if UserInfo.username and UserInfo.username ~= "" then
-t = '['..UserInfo.first_name..'](t.me/'..UserInfo.username..')'
-ban = ' '..UserInfo.first_name..' '
-u = ''..UserInfo.username..''
-else
-t = '['..UserInfo.first_name..'](tg://user?id='..UserInfo.id..')'
-u = 'rFrFF'
-end
 local reply_markup = bot.replyMarkup{
 type = 'inline',data = {
-{{text = '‹ اضفني الى مجموعتك ›',url="https://t.me/"..bot.getMe().username.."?startgroup=new"}},
-{{text = '‹ مطور البوت ›',url="https://t.me/"..(u)..""}},
-{{text ='‹ للتنصيب ›',url="https://t.me/rFrFF"},{text = '‹ تواصل ›',url="https://t.me/tuofbot"}},
-{{text = '‹ قناة السورس ›',url="https://t.me/iinzzz"}},
+{{text = '-  اضفني الى مجموعتك .',url="https://t.me/"..bot.getMe().username.."?startgroup=new"}},
+{{text = '- ᴀʟʜᴀʟᴀ𝙵ɪɪ 𝚂ᴏᴜʀᴄᴇ .',url="t.me/iinzzz"}},
 }
 }
 if redis:get(bot_id..":start") then
 r = redis:get(bot_id..":start")
 else
-r ="*✻ : اهلا بك عزيزي انا الحلفي .\n✻ : لحمايه المجموعات ومميزات خدميه اخرى .\n✻ : ارفعي مشرف في كروبك وارسل تفعيل .\n✻ : سيتم رفع المالك والادمنيه تلقائيا .*"
+r ="*- اهلا بك في بوت الحمايه  \n- وضيفتي حمايه المجموعات من السبام والتفليش والخ..\n- لتفعيل البوت ارسل كلمه *تفعيل"
 end
 return bot.sendText(msg.chat_id,msg.id,r,"md", true, false, false, false, reply_markup)
 end
