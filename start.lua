@@ -18746,9 +18746,9 @@ end
 f text == "قفل الملصق المميز" then
 if Redis:get(bot_id..":"..msg.chat_id..":settings:customEmoji") then
 Redis:del(bot_id..":"..msg.chat_id..":settings:customEmoji")
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*- تم بنجاح قفل الملصق.*").by,"md",true)  
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 else
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*- تم بنجاح قفل الملصق سابقآ .*").by,"md",true)  
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 end
 end
 if text == "فتح الملصق المميز" then
@@ -18756,10 +18756,10 @@ if not Administrator(msg) then
 return bot.sendText(msg.chat_id,msg.id,'\n*✻ : عذراً الامر يخص الادمن فقط .* ',"md",true)  
 end
 if Redis:get(bot_id..":"..msg.chat_id..":settings:customEmoji") then
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم فتح المميز سابقآ *").by,"md",true)
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 else
 Redis:set(bot_id..":"..msg.chat_id..":settings:customEmoji",true)
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم فتح الملصق المميز *").by,"md",true)
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 end
 end
 if not Administrator(msg) then
@@ -18768,9 +18768,9 @@ end
 if text == "فتح التشويش" then
 if Redis:get(bot_id..":"..msg.chat_id..":settings:spoiler") then
 Redis:del(bot_id..":"..msg.chat_id..":settings:spoiler")
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم فتح التشويش سابقآ *").by,"md",true)
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 else
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم فتح التويش *").by,"md",true)
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 end
 end
 if not Administrator(msg) then
@@ -18778,10 +18778,10 @@ return bot.sendText(msg.chat_id,msg.id,'\n*✻ : عذراً الامر يخص ا
 end
 if text == "قفل التشويش" then
 if Redis:get(bot_id..":"..msg.chat_id..":settings:spoiler") then
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل التشويش سابقآ *").by,"md",true)
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 else
 Redis:set(bot_id..":"..msg.chat_id..":settings:spoiler",true)
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل التشويش  *").by,"md",true)
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender_id.user_id,"*✻ : تم قفل "..text.." .*").by,"md",true)
 end
 end
 if text == "طلاق" and msg.reply_to_message_id ~= 0 then
