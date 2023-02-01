@@ -1024,6 +1024,15 @@ local url , res = https.request("https://api.telegram.org/bot"..Token.."/"..meth
 data = json:decode(url)
 return data 
 end
+function sEndDon(url)
+local get = io.popen('curl -s "https://black-source.xyz/Api/Yu.php?do='..URL.escape(url)..'"'):read('*a')
+local InfoVid = JSON.decode(get)
+return InfoVid["Info"]["voice"]
+end
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+io.popen("mkdir hso_Files")
+print("\27[34m"..[[>> mkdir hso_Files Done]].."\27[m")
 ----------------------------------------------------------------------------------------------------
 function Callback(data)
 ----------------------------------------------------------------------------------------------------
@@ -1031,6 +1040,51 @@ Text = bot.base64_decode(data.payload.data)
 user_id = data.sender_user_id
 chat_id = data.chat_id
 msg_id = data.message_id
+if Text and Text:match("^DownloadY#(.*)#(.*)#(.*)") then
+local infomsg = {Text:match("^DownloadY#(.*)#(.*)#(.*)")}
+if tonumber(data.sender_user_id) ~= tonumber(infomsg[1]) then  
+bot.answerCallbackQuery(data.id, "- الامر لا يخصك .", true)
+return false
+end  
+bot.editMessageText(chat_id,msg_id,"- انتظر قليلا من فضلك `. .. .`", 'md')
+if sEndDon(infomsg[2]) == "not" then
+bot.editMessageText(chat_id,msg_id,"*- عذراً حدث خطأ ما .*", 'md')
+else
+send("sendVoice",{
+chat_id=chat_id,
+voice=sEndDon(infomsg[2]),
+caption=("- تم تحميل الاغنيه بنجاح ."),
+reply_to_message_id=infomsg[3],
+parse_mode="markdown",
+---reply_markup=markup(nil,{{{text = 'ʙʟᴀᴄᴋ',url="t.me/UBBBB"}}})
+})
+return bot.editMessageText(chat_id,msg_id,'- تم التحميل ✔')
+end
+end
+if Text and Text:match("^serchy#(.*)#(.*)#(.*)#(.*)#(.*)") then
+local infomsg = {Text:match("^serchy#(.*)#(.*)#(.*)#(.*)#(.*)")}
+if tonumber(data.sender_user_id) ~= tonumber(infomsg[1]) then  
+bot.answerCallbackQuery(data.id, "- الامر لا يخصك .", true)
+return false
+end  
+bot.answerCallbackQuery(data.id, "- انتظر .. .", true)
+local get = io.popen('curl -s "https://black-source.xyz/Api/serch.php/?serch='..URL.escape(infomsg[4])..'"'):read('*a')
+local json = JSON.decode(get)
+sdata = {}
+for i = infomsg[2],infomsg[3] do
+sdata[i] = {{text =json['Info']['Title'][i],data ="DownloadY#"..data.sender_user_id.."#"..json['Info']['Id'][i].."#"..infomsg[5]}}
+end
+if infomsg[2] == '2' then
+sdata[7] = {{text="➡️",data="serchy#"..data.sender_user_id.."#7#11#"..infomsg[4].."#"..infomsg[5]}}
+else
+sdata[7] = {{text="⬅️",data="serchy#"..data.sender_user_id.."#2#6#"..infomsg[4].."#"..infomsg[5]}}
+end
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = sdata
+}
+return bot.editMessageText(chat_id,msg_id,'- نتائج البحث لـ "'..infomsg[4]..'"', 'md', true, false, reply_markup)
+end
 if Text and Text:match("^marriage_(.*)_(.*)_(.*)_(.*)") then
 local infomsg = {Text:match("^marriage_(.*)_(.*)_(.*)_(.*)")}
 if tonumber(data.sender_user_id) ~= tonumber(infomsg[2]) then
@@ -1805,7 +1859,7 @@ keyboard.inline_keyboard = {
 {text = '‹ صوره اخرى ›', callback_data =data.sender_user_id..'/aftar'}, 
 },
 }
-https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. chat_id .. '&photo=https://t.me/nyx441/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. chat_id .. '&photo=https://t.me/PhotosWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 bot.deleteMessages(chat_id,{[1]= msg_id})
 end
 end
@@ -1829,7 +1883,7 @@ end
 if Text and Text:match('(%d+)/aftboy') then
 local UserId = Text:match('(%d+)/aftboy')
 if tonumber(data.sender_user_id) == tonumber(UserId) then
-Abs = math.random(2,140);
+Abs = math.random(38,265);
 local Text ='✻ : تم اختيار الصوره لك .'
 keyboard = {}
 keyboard.inline_keyboard = {
@@ -1858,6 +1912,22 @@ bot.deleteMessages(chat_id,{[1]= msg_id})
 end
 end
 
+if Text and Text:match('(%d+)/tuofe1') then
+local UserId = Text:match('(%d+)/tuofe1')
+if tonumber(data.sender_user_id) == tonumber(UserId) then
+Abs = math.random(74,139);
+local Text ='لقلبك الابتسامة 🥰'
+keyboard = {}
+keyboard.inline_keyboard = {
+{
+{text = '‹ نكته اخرى ›', callback_data =data.sender_user_id..'/tuofe1'}, 
+},
+}
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. chat_id .. '&photo=https://t.me/ox963/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+bot.deleteMessages(chat_id,{[1]= msg_id})
+end
+end
+
 if Text and Text:match('(%d+)/gifed') then
 local UserId = Text:match('(%d+)/gifed')
 if tonumber(data.sender_user_id) == tonumber(UserId) then
@@ -1869,7 +1939,7 @@ keyboard.inline_keyboard = {
 {text = '‹ متحركه اخرى ›', callback_data =data.sender_user_id..'/gifed'}, 
 },
 }
-https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. chat_id .. '&animation=https://t.me/qwqwgif/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. chat_id .. '&animation=https://t.me/GifWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 bot.deleteMessages(chat_id,{[1]= msg_id})
 end
 end
@@ -1901,7 +1971,7 @@ keyboard.inline_keyboard = {
 {text = '‹ انمي اخر ›', callback_data =data.sender_user_id..'/anme'}, 
 },
 }
-https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. chat_id .. '&photo=https://t.me/AnimeDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. chat_id .. '&photo=https://t.me/AnimeWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id=0&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 bot.deleteMessages(chat_id,{[1]= msg_id})
 end
 end
@@ -16210,14 +16280,14 @@ if text == "صوره" or text == "افتار" then
 if not redis:get(bot_id.."trfeh"..msg.chat_id) then
 return bot.sendText(msg.chat_id,msg.id,"✻ : التسليه معطله بواسطه المشرفين .","md",true)
 end
-Abs = math.random(2,140);
+Abs = math.random(4,1120);
 local Text ='✻ : تم اختيار الصوره لك .'
 local MsgId = msg.id/2097152/0.5
 local MSGID = string.gsub(MsgId,'.0','')
 keyboard = {}  
 keyboard.inline_keyboard = {{{text = '‹ صوره اخرى ›',callback_data = msg.sender_id.user_id..'/aftar'}}} 
 local msg_id = msg.id/2097152/0.5 
-https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/nyx441/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/PhotosWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "ميمز" or text == "ميمزات" then
 if not redis:get(bot_id.."memzz"..msg.chat_id) then
@@ -16232,11 +16302,58 @@ keyboard.inline_keyboard = {{{text = '‹ ميمز اخر ›',callback_data = m
 local msg_id = msg.id/2097152/0.5 
 https.request("https://api.telegram.org/bot"..Token..'/sendVoice?chat_id=' .. msg.chat_id .. '&voice=https://t.me/werrtl/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
+if text == "نكت" or text == "نكته" then
+Abs = math.random(74,139);
+local Text ='✻ : دوم الابتسامة 😚 . '
+local MsgId = msg.id/2097152/0.5
+local MSGID = string.gsub(MsgId,'.0','')
+keyboard = {}  
+keyboard.inline_keyboard = {{{text = '‹ نكته اخرى ›',callback_data = msg.sender_id.user_id..'/tuofe1'}}} 
+local msg_id = msg.id/2097152/0.5 
+https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. msg.chat_id .. '&animation=https://t.me/ox963/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+if text == "قصيده" or text == "ق" then
+  Abs = math.random(87,138);
+  local Text ='✻ : شفيعك الحسين 🏴 .'
+  local MsgId = msg.id/2097152/0.5
+  local MSGID = string.gsub(MsgId,'.0','')
+  keyboard = {}
+  keyboard.inline_keyboard = {{{text = '- sᴏᴜʀᴄᴇ ᴀʟʜ ᴀʟᴀғɪɪ .',url="t.me/iinzzz"}}} 
+  local msg_id = msg.id/2097152/0.5
+  https.request("https://api.telegram.org/bot"..Token..'/sendVoice?chat_id=' .. msg.chat_id .. '&voice=https://t.me/RRRRRRRiRRR/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+  end
+if text == "ستوري" or text == "استوري" then
+Abs = math.random(15,44);
+local Text ='✻ : الاستوري لك جاهز للنشر '
+local MsgId = msg.id/2097152/0.5
+local MSGID = string.gsub(MsgId,'.0','')
+keyboard = {}  
+keyboard.inline_keyboard = {
+{{text = '- sᴏᴜʀᴄᴇ ᴀʟʜᴀʟᴀғɪɪ .',url="t.me/iinzzz"}},
+}
+local msg_id = msg.id/2097152/0.5 
+https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. msg.chat_id .. '&animation=https://t.me/stortolen/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+if text == "اقتباس" or text == "اقتباسات" or text == "قتباس" then 
+if not redis:get(bot_id.."trfeh"..msg.chat_id) then
+return bot.sendText(msg.chat_id,msg.id,"✻ : التسليه معطله بواسطه المشرفين .","md",true)
+end
+Abs = math.random(3,101);
+local Text ='✻ : تم اختيار الاقتباس لك وحدك.'
+local MsgId = msg.id/2097152/0.5
+local MSGID = string.gsub(MsgId,'.0','')
+keyboard = {}  
+keyboard.inline_keyboard = {
+{{text = '- sᴏᴜʀᴄᴇ ᴀʟʜᴀʟᴀғɪɪ .',url="t.me/iinzzz"}},
+}
+local msg_id = msg.id/2097152/0.5 
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/SSSSDIBOTZ/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
 if text == "صور شباب" or text == "افتارات شباب" then
 if not redis:get(bot_id.."trfeh"..msg.chat_id) then
 return bot.sendText(msg.chat_id,msg.id,"✻ : التسليه معطله بواسطه المشرفين .","md",true)
 end
-Abs = math.random(2,140);
+Abs = math.random(38,265);
 local Text ='✻ : تم اختيار الصوره لك .'
 local MsgId = msg.id/2097152/0.5
 local MSGID = string.gsub(MsgId,'.0','')
@@ -16262,14 +16379,14 @@ if text == "قيف" or text == "متحركه" or text == "متحركة" then
 if not redis:get(bot_id.."trfeh"..msg.chat_id) then
 return bot.sendText(msg.chat_id,msg.id,"✻ : التسليه معطله بواسطه المشرفين .","md",true)
 end
-Abs = math.random(2,140);
+Abs = math.random(2,1075);
 local Text ='✻ : تم اختيار المتحركه لك .'
 local MsgId = msg.id/2097152/0.5
 local MSGID = string.gsub(MsgId,'.0','')
 keyboard = {}  
 keyboard.inline_keyboard = {{{text = '‹ متحركه اخرى ›',callback_data = msg.sender_id.user_id..'/gifed'}}} 
 local msg_id = msg.id/2097152/0.5 
-https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. msg.chat_id .. '&animation=https://t.me/qwqwgif/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. msg.chat_id .. '&animation=https://t.me/GifWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "فلم" or text == "افلام" then
 if not redis:get(bot_id.."trfeh"..msg.chat_id) then
@@ -16288,14 +16405,14 @@ if text == "انمي" or text == "انميي" then
 if not redis:get(bot_id.."trfeh"..msg.chat_id) then
 return bot.sendText(msg.chat_id,msg.id,"✻ : التسليه معطله بواسطه المشرفين .","md",true)
 end
-Abs = math.random(2,140);
+Abs = math.random(3,998);
 local Text ='✻ : تم اختيار الانمي لك .'
 local MsgId = msg.id/2097152/0.5
 local MSGID = string.gsub(MsgId,'.0','')
 keyboard = {}  
 keyboard.inline_keyboard = {{{text = '‹ انمي اخر ›',callback_data = msg.sender_id.user_id..'/anme'}}} 
 local msg_id = msg.id/2097152/0.5 
-https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/AnimeDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/AnimeWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "ستوري" or text == "استوري" then
 if not redis:get(bot_id.."trfeh"..msg.chat_id) then
@@ -18826,6 +18943,14 @@ local arr = {
 bot.sendText(msg.chat_id,0,arr[math.random(#arr)],"md", true)
 redis:setex(bot_id..":PinMsegees:"..msg.chat_id,60,text)
 end
+end
+if text == "اوامر التسليه" or text == "اوامر التسلية" then 
+local reply_markup = bot.replyMarkup{
+type = 'inline',data = {
+{{text = '- sᴏᴜʀᴄᴇ ᴀʟʜᴀʟᴀғɪɪ .',url="https://t.me/iinzzz"}},
+}
+}
+bot.sendText(msg.chat_id,msg.id,"*✻ : اوامر التسليه هي .\nٴ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n✻ : مصه . \n✻ : بوسه . \n✻ : هينه . \n✻ : رزلها . \n✻ : هينها . \n✻ : شنو رئيك بهذا . \n✻ : شنو رئيك بهاي . \n✻ : كت تويت .*","md", true, false, false, false, reply_markup)
 end
 if text == "مصه" or text == "بوسه" then
 local texting = {"مووووووووواححح????","مممممححه ??😥","خدك/ج نضيف 😂","البوسه بالف حمبي ??💋","ممحمحمحمحح 😰😖","كل شويه ابوسك كافي 😏","ماابوسه والله هذا زاحف🦎","محح هاي لحاته صاكه??"}
@@ -23557,26 +23682,21 @@ local list = redis:smembers(bot_id.."Add:Rd:array:Textt"..text)
 return bot.sendText(msg.chat_id,msg.id,"["..list[math.random(#list)].."]","md",true)  
 end  
 ----------------------------------------------------------------------------------------------------
-if msg.content.text then
-if text:match("^كلمه بحث (.*)$") then
-if redis:get(bot_id.."youutube"..msg.chat_id) then
-return bot.sendText(msg.chat_id,msg.id,"✻ : اليوتيوب متوقف حاليا","md",true)
-end
-local search = text:match("^كلمه بحث (.*)$")
-local get = io.popen('curl -s "https://api-jack.ml/api18.php?search='..URL.escape(search)..'"'):read('*a')
-local j = JSON.decode(get) 
-local json = j.results 
-local datar = {data = {{text = "✻ : sᴏᴜʀᴄᴇ ᴀʟʜᴀʟᴀғɪɪ ." , url = 'http://t.me/iinzzz'}}}
+if text then
+if text:match("^بحث (.*)$") then
+local search = text:match("^بحث (.*)$")
+local get = io.popen('curl -s "https://black-source.xyz/Api/serch.php/?serch='..URL.escape(search)..'"'):read('*a')
+local json = JSON.decode(get)
+local datar = {data = {{text = "➡️" , data ="serchy#"..msg.sender_id.user_id.."#7#11#"..search.."#"..msg.id}}}
 for i = 1,5 do
-title = json[i].title
-link = json[i].url
-datar[i] = {{text = title , data =msg.sender_id.user_id.."dl/"..link}}
+datar[i] = {{text =json['Info']['Title'][i],data ="DownloadY#"..msg.sender_id.user_id.."#"..json['Info']['Id'][i].."#"..msg.id}}
+datar[i] = {{text = json.Info.Title[i],data ="DownloadY#"..msg.sender_id.user_id.."#"..json.Info.Id[i].."#"..msg.id}}
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = datar
 }
-bot.sendText(msg.chat_id,msg.id,'✻ : نتائج بحثك ل *'..search..'*',"md",false, false, false, false, reply_markup)
+bot.sendText(msg.chat_id,msg.id,'- نتائج البحث لـ "'..search..'"',"md",false, false, false, false, reply_markup)
 end
 end
 
